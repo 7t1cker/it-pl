@@ -1,0 +1,35 @@
+version: "3.7"
+services:
+  load_balancer:
+    build:
+      context: .
+      dockerfile: Dockerfile_ng
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./html:/var/www/html
+    networks:
+      - internal
+      - external
+
+  flask_app1:
+    image: flask_app_image:latest
+    networks:
+      - internal
+
+  flask_app2:
+    image: flask_app_image:latest
+    networks:
+      - internal
+
+  flask_app3:
+    image: flask_app_image:latest
+    networks:
+      - internal
+
+networks:
+  internal:
+    driver: bridge
+  external:
+    driver: bridge
